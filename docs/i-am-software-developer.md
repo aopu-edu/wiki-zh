@@ -31,33 +31,33 @@ npm config set https-proxy http://server:port
     
 2. 安装和链接
 
-    install指令会根据package.json内容下载安装所有必要的npm包，link指令会以本地npm包替换项目内默认的包，这样你在scratch-blocks等包中的修改才会被scratch-gui使用，否则它默认使用的将会是从npm服务器下载的内容，你可以查看scratch-gui/node_modules下的scratch-blocks与scratch-vm的文件夹，如果link成功，那么他们将被链接到本地克隆下来的工程的位置。
+    install指令会根据package.json内容下载安装所有必要的npm包，link指令会以本地npm包替换项目内默认的包，这样你在scratchhw-blocks等包中的修改才会被scratchhw-gui使用，否则它默认使用的将会是从npm服务器下载的内容，你可以查看scratchhw-gui/node_modules下的scratchhw-blocks与scratchhw-vm的文件夹，如果link成功，那么他们将被链接到本地克隆下来的工程的位置。
     
     ```bash
-    cd scratch-blocks
+    cd scratchhw-blocks
     npm install
     npm link
     cd ..
-    cd scratch-vm
+    cd scratchhw-vm
     npm install
     npm link
     cd ..
-    cd scratch-gui
+    cd scratchhw-gui
     npm install
-    npm link scratch-blocks scratch-vm
+    npm link scratchhw-blocks scratchhw-vm
     cd ..
-    cd scratch-link
+    cd scratchhw-link
     npm install
     cd ..
-    cd scratch-extension-server
+    cd scratchhw-extension-server
     npm install
     cd ..
     ```
     
-3. 复制Arduino IDE到路径： `scratch-link\tools\Arduino\*`，完成后的文件树结构将如下面所示。
+3. 复制Arduino IDE到路径： `scratchhw-link\tools\Arduino\*`，完成后的文件树结构将如下面所示。
 
     ```
-    scratch-link\tools\
+    scratchhw-link\tools\
     |- Arduino\
       |- drivers\
       |- examples\
@@ -70,32 +70,32 @@ npm config set https-proxy http://server:port
 
 ## 运行
 
-1. 启动硬件接口服务器 scratch-link
+1. 启动硬件接口服务器 scratchhw-link
 
     ```bash
-    cd scratch-link
+    cd scratchhw-link
     npm start
     ```
 
-2. 启动插件内部服务器 scratch-extension-server
+2. 启动插件内部服务器 scratchhw-extension-server
 
 	在新的一个终端中执行。
 
     ```bash
-    cd scratch-extension-server
+    cd scratchhw-extension-server
     npm start
     ```
 
-3. 启动 scratch-gui
+3. 启动 scratchhw-gui
 
 	在新的一个终端中执行。
 
     ```bash
-    cd scratch-gui
+    cd scratchhw-gui
     npm run start-open
     ```
 
-4. 在scratch-gui的webpack构建完成后，将会有弹出scratch-gui的网页，开始使用吧~。当然你也可以通过手动输入地址 `http://127.0.0.1:8601/` 来访问。
+4. 在scratchhw-gui的webpack构建完成后，将会有弹出scratchhw-gui的网页，开始使用吧~。当然你也可以通过手动输入地址 `http://127.0.0.1:8601/` 来访问。
 
 ## 了解更多开发内容
 
