@@ -1,0 +1,974 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Porgram your hardware with scratch3">
+      
+      
+      
+        <link rel="canonical" href="https://ScratchHW.github.io/wiki-zh/software-developer-reference/how-to-add-a-new-extension/">
+      
+      
+        <meta name="author" content="ScratchHW Team">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.7">
+    
+    
+      
+        <title>如何添加新的设备扩展 - ScratchHW</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.19753c6b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.196e0c26.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://ScratchHW.github.io/wiki-zh" title="ScratchHW" class="md-header-nav__button md-logo" aria-label="ScratchHW">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            ScratchHW
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              如何添加新的设备扩展
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/ScratchHW/wiki-zh/" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ScratchHW/wiki-zh
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+
+  
+
+<nav class="md-tabs md-tabs--active" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+    
+    <a href="../.." class="md-tabs__link">
+      主页
+    </a>
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+      
+      <a href="../../i-am-software-developer/" class="md-tabs__link">
+        入门
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+      
+        
+      
+      <a href="../framework-introduction/" class="md-tabs__link md-tabs__link--active">
+        软件开发者指南
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+      
+      <a href="../../changelog/" class="md-tabs__link">
+        变更记录
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://ScratchHW.github.io/wiki-zh" title="ScratchHW" class="md-nav__button md-logo" aria-label="ScratchHW">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    ScratchHW
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/ScratchHW/wiki-zh/" title="前往 GitHub 仓库" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ScratchHW/wiki-zh
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." class="md-nav__link">
+      主页
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    <label class="md-nav__link" for="nav-2">
+      入门
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="入门" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        入门
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../i-am-software-developer/" class="md-nav__link">
+      我是软件开发者
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../i-am-normal-user/" class="md-nav__link">
+      我是普通用户
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../license/" class="md-nav__link">
+      许可证
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    <label class="md-nav__link" for="nav-3">
+      软件开发者指南
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="软件开发者指南" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        软件开发者指南
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../framework-introduction/" class="md-nav__link">
+      构架介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../how-to-add-a-new-device/" class="md-nav__link">
+      如何添加新的设备
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        如何添加新的设备扩展
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      如何添加新的设备扩展
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    概述
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    具体步骤
+  </a>
+  
+    <nav class="md-nav" aria-label="具体步骤">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indexjs" class="md-nav__link">
+    index.js
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blocksjs" class="md-nav__link">
+    blocks.js
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generatorjs" class="md-nav__link">
+    generator.js
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolboxxml" class="md-nav__link">
+    toolbox.xml
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    测试插件
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../code-generator/" class="md-nav__link">
+      代码生成器
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    <label class="md-nav__link" for="nav-4">
+      变更记录
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="变更记录" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        变更记录
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../changelog/" class="md-nav__link">
+      变更记录
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    概述
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    具体步骤
+  </a>
+  
+    <nav class="md-nav" aria-label="具体步骤">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indexjs" class="md-nav__link">
+    index.js
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blocksjs" class="md-nav__link">
+    blocks.js
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generatorjs" class="md-nav__link">
+    generator.js
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#toolboxxml" class="md-nav__link">
+    toolbox.xml
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    测试插件
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/ScratchHW/wiki-zh/edit/master/docs/software-developer-reference/how-to-add-a-new-extension.md" title="编辑此页" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="_1">如何添加新的设备扩展<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="_2">概述<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>在 scratch-HW 中 devices extension 是为device设备提供的扩展，不同于scratch原本的扩展，devices extension不会被webpack打包，它是由一个外部的扩展服务器提供的，当然这个服务器可以是远程的也可以是本地的。通过这种方式我们就可以实现扩展的动态修改和加载功能了。</p>
+<h2 id="_3">具体步骤<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>在scratch-extension-server\src下复制dht11为一个新的文件夹，并将其改名为你的扩展的名字。</p>
+<h3 id="indexjs">index.js<a class="headerlink" href="#indexjs" title="Permanent link">&para;</a></h3>
+<p>index.js文件的内容描述了此插件的名称，版本，作者等显示内容，也描述了此插件的积木渲染，代码转译等函数文件的位置。下面以dht11的文件举例。</p>
+<div class="highlight"><pre><span></span><code><span class="kr">const</span> <span class="nx">formatMessage</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;format-message&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">staticPath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">relative</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">&#39;/../../src&#39;</span><span class="p">,</span> <span class="nx">__dirname</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">dht11</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;DHT11&quot;</span><span class="p">,</span>
+    <span class="nx">extensionId</span><span class="o">:</span> <span class="s1">&#39;dht11&#39;</span><span class="p">,</span>
+    <span class="nx">version</span><span class="o">:</span> <span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+    <span class="nx">supportDevice</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;arduinoUno&#39;</span><span class="p">],</span>
+    <span class="nx">author</span><span class="o">:</span> <span class="s1">&#39;Yang&#39;</span><span class="p">,</span>
+    <span class="nx">iconURL</span><span class="o">:</span> <span class="nx">staticPath</span> <span class="o">+</span> <span class="s1">&#39;/asset/DTH11.png&#39;</span><span class="p">,</span>
+    <span class="nx">description</span><span class="o">:</span> <span class="nx">formatMessage</span><span class="p">({</span>
+        <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;dht11.description&#39;</span><span class="p">,</span>
+        <span class="k">default</span><span class="o">:</span> <span class="s1">&#39;DHT11 Temperature and humidity sensor module.&#39;</span><span class="p">,</span>
+        <span class="nx">description</span><span class="o">:</span> <span class="s1">&#39;Description description of dht11&#39;</span>
+    <span class="p">}),</span>
+    <span class="nx">featured</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nx">blocks</span><span class="o">:</span> <span class="nx">staticPath</span> <span class="o">+</span> <span class="s1">&#39;/blocks.js&#39;</span><span class="p">,</span>
+    <span class="nx">generator</span><span class="o">:</span>  <span class="nx">staticPath</span> <span class="o">+</span> <span class="s1">&#39;/generator.js&#39;</span><span class="p">,</span>
+    <span class="nx">toolbox</span><span class="o">:</span>  <span class="nx">staticPath</span> <span class="o">+</span> <span class="s1">&#39;/toolbox.xml&#39;</span><span class="p">,</span>
+    <span class="nx">msg</span><span class="o">:</span> <span class="nx">staticPath</span> <span class="o">+</span> <span class="s1">&#39;/msg.js&#39;</span><span class="p">,</span>
+    <span class="nx">location</span><span class="o">:</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span>     <span class="c1">// or &#39;remote&#39;</span>
+    <span class="nx">link</span><span class="o">:</span> <span class="s1">&#39;https://www.baidu.com&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">dht11</span><span class="p">;</span>
+</code></pre></div>
+<p><em>以下带有星号*的参数为必须参数</em></p>
+<ul>
+<li>
+<p><strong>name*</strong></p>
+<p>显示在扩展选择界面的名字</p>
+</li>
+<li>
+<p><strong>extensionId*</strong></p>
+<p>扩展的唯一ID</p>
+</li>
+<li>
+<p><strong>version</strong></p>
+<p>显示在扩展选择界面的版本号</p>
+</li>
+<li>
+<p><strong>supportDevice*</strong></p>
+<p>支持的设备，扩展只会选择了对应支持的设备后才会在扩展选择界面显示</p>
+</li>
+<li>
+<p><strong>author</strong></p>
+<p>显示在扩展选择界面的作者名字</p>
+</li>
+<li>
+<p><strong>iconURL*</strong></p>
+<p>显示在扩展选择界面的图片，图片比例和像素参数请参照DHT11样例中的修改</p>
+</li>
+<li>
+<p><strong>description</strong></p>
+<p>显示在扩展选择界面图片下方扩展介绍内容</p>
+</li>
+<li>
+<p><strong>featured*</strong></p>
+<p>此参数为内部参数，必须设置为true</p>
+</li>
+<li>
+<p><strong>blocks*</strong></p>
+<p>扩展的积木渲染生成代码</p>
+</li>
+<li>
+<p><strong>generator*</strong></p>
+<p>扩展的积木的转转译代码</p>
+</li>
+<li>
+<p><strong>toolbox*</strong></p>
+<p>扩展的工具箱代码，描述扩展在界面左侧工具箱中的显示和排列方式</p>
+</li>
+<li>
+<p><strong>msg*</strong></p>
+<p>扩展的多语言支持</p>
+</li>
+<li>
+<p><strong>location*</strong></p>
+<p>只有 local / remote 两个选项，用来标识扩展是部署在云端还是本地，在目前的调试版中，直接默认为local 即可</p>
+</li>
+<li>
+<p><strong>link</strong></p>
+<p>似乎目前还没有使用</p>
+</li>
+</ul>
+<h3 id="blocksjs">blocks.js<a class="headerlink" href="#blocksjs" title="Permanent link">&para;</a></h3>
+<p>此文件定义了插件内部的积木的样式，以下为DHT样板的代码片段。</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// src\dht11\blocks.js</span>
+<span class="kd">var</span> <span class="nx">color</span> <span class="o">=</span> <span class="s1">&#39;#28BFE6&#39;</span><span class="p">;</span>
+
+<span class="nx">Blockly</span><span class="p">.</span><span class="nx">Blocks</span><span class="p">[</span><span class="s1">&#39;DHT_INIT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">init</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">jsonInit</span><span class="p">({</span>
+            <span class="s2">&quot;message0&quot;</span><span class="o">:</span> <span class="nx">Blockly</span><span class="p">.</span><span class="nx">Msg</span><span class="p">.</span><span class="nx">DHT_INIT</span><span class="p">,</span>
+            <span class="s2">&quot;args0&quot;</span><span class="o">:</span> <span class="p">[{</span>
+                <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;input_value&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;no&quot;</span>
+            <span class="p">},</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;field_dropdown&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;pin&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;options&quot;</span><span class="o">:</span> <span class="p">[</span>
+                    <span class="p">[</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;10&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;11&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="s1">&#39;13&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;A0&#39;</span><span class="p">,</span> <span class="s1">&#39;A0&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;A1&#39;</span><span class="p">,</span> <span class="s1">&#39;A1&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;A2&#39;</span><span class="p">,</span> <span class="s1">&#39;A2&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;A3&#39;</span><span class="p">,</span> <span class="s1">&#39;A3&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;A5&#39;</span><span class="p">,</span> <span class="s1">&#39;A5&#39;</span><span class="p">]]</span>
+            <span class="p">},</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;field_dropdown&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;mode&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;options&quot;</span><span class="o">:</span> <span class="p">[</span>
+                    <span class="p">[</span><span class="s1">&#39;dht11&#39;</span><span class="p">,</span> <span class="s1">&#39;11&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;dht21&#39;</span><span class="p">,</span> <span class="s1">&#39;21&#39;</span><span class="p">],</span>
+                    <span class="p">[</span><span class="s1">&#39;dht22&#39;</span><span class="p">,</span> <span class="s1">&#39;22&#39;</span><span class="p">]]</span>
+            <span class="p">}],</span>
+            <span class="s2">&quot;colour&quot;</span><span class="o">:</span> <span class="nx">color</span><span class="p">,</span>
+            <span class="s2">&quot;extensions&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;shape_statement&quot;</span><span class="p">]</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// src\dht11\msg.js line 4</span>
+<span class="nx">DHT_INIT</span> <span class="o">:</span> <span class="s1">&#39;init dht %1 pin %2 mode %3&#39;</span><span class="p">,</span>
+</code></pre></div>
+<p>一个积木块由以下参数构成</p>
+<p><strong>message0</strong> ：</p>
+<p>​   积木整体显示内容由message0内容决定，由于这里由多语言翻译内容，所以这里的内容是由 msg.js 中定义的，可以看到积木中的参数是由 %1 %2这样的形式定义的。而后其参数的具体内容由args0定义的数组定义。</p>
+<p><strong>args0</strong> 属性：</p>
+<ul>
+<li>
+<p><strong>type</strong></p>
+<p>可选值：</p>
+<p>​   <strong>input_value</strong>：输入框，默认为圆角矩形，即数字与字符串接收框，如果下方check属性的值为Boolean，则此处为尖角矩形，即布尔值接收框。</p>
+<p>​   <strong>field_dropdown</strong>：下拉框，选项内容在option中定义。</p>
+<p>​   <strong>math_angle</strong>：输入框，数字与字符串接收框，蛋点击后会弹出一个角度界面，可以以图形化方式设定此输入框数值。</p>
+<p>​   ... 仍有很多选项，待补充</p>
+</li>
+<li>
+<p><strong>name</strong></p>
+<p>参数名称，在代码转译函数中会根据这个名称来获取次参数的值。</p>
+</li>
+<li>
+<p><strong>check</strong></p>
+<p>可选值：</p>
+<p>​   <strong>Boolean</strong>：定义此参数框仅接收布尔值。</p>
+<p>​   <strong>Number</strong>：定义此参数框仅接收数字值。</p>
+</li>
+<li>
+<p><strong>options</strong></p>
+<p>定义下拉框的内容，数组的第一个值为实际显示内容，第二个值为代码转译时获取的值。</p>
+</li>
+</ul>
+<p><strong>colour</strong>：</p>
+<p>​   积木颜色，一般一个扩展我们通常都使用同一个颜色，所此处以一个颜色变量引入。</p>
+<p><strong>extensions</strong>：</p>
+<p>​   这个参数决定了，积木的类型或这说是外部形状。可选值有：</p>
+<p>​   <strong>shape_statement</strong>：可以上下连接积木的常规命令方块</p>
+<p>​   <strong>output_number</strong>：圆角矩形积木，输出数字值</p>
+<p>​   <strong>output_string</strong>：圆角矩形积木，输出字符串</p>
+<p>​   <strong>output_boolean</strong>：尖角矩形积木，输出布尔值</p>
+<p>​   .. 还有一些选项，待补充</p>
+<h3 id="generatorjs">generator.js<a class="headerlink" href="#generatorjs" title="Permanent link">&para;</a></h3>
+<p>此文件定义了插件积木的代码转译函数。</p>
+<div class="highlight"><pre><span></span><code><span class="nx">Blockly</span><span class="p">.</span><span class="nx">Arduino</span><span class="p">[</span><span class="s1">&#39;DHT_INIT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">block</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">no</span> <span class="o">=</span> <span class="nx">Blockly</span><span class="p">.</span><span class="nx">Arduino</span><span class="p">.</span><span class="nx">valueToCode</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="nx">Blockly</span><span class="p">.</span><span class="nx">Arduino</span><span class="p">.</span><span class="nx">ORDER_ATOMIC</span><span class="p">);</span>
+    <span class="kd">let</span> <span class="nx">pin</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getFieldValue</span><span class="p">(</span><span class="s1">&#39;pin&#39;</span><span class="p">);</span>
+    <span class="kd">let</span> <span class="nx">mode</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getFieldValue</span><span class="p">(</span><span class="s1">&#39;mode&#39;</span><span class="p">);</span>
+
+    <span class="nx">Blockly</span><span class="p">.</span><span class="nx">Arduino</span><span class="p">.</span><span class="nx">includes_</span><span class="p">[</span><span class="s1">&#39;include_DHT_INIT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sb">`#include &quot;&lt;DHT.h&gt;&quot;`</span><span class="p">;</span>
+    <span class="nx">Blockly</span><span class="p">.</span><span class="nx">Arduino</span><span class="p">.</span><span class="nx">definitions_</span><span class="p">[</span><span class="s1">&#39;define_DHT_INIT_${no}&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sb">`DHT dht_</span><span class="si">${</span><span class="nx">no</span><span class="si">}</span><span class="sb">(</span><span class="si">${</span><span class="nx">pin</span><span class="si">}</span><span class="sb">, </span><span class="si">${</span><span class="nx">mode</span><span class="si">}</span><span class="sb">);`</span><span class="p">;</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">Blockly</span><span class="p">.</span><span class="nx">Arduino</span><span class="p">[</span><span class="s1">&#39;DHT_READ_HUMIDITY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">block</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">no</span> <span class="o">=</span> <span class="nx">Blockly</span><span class="p">.</span><span class="nx">Arduino</span><span class="p">.</span><span class="nx">valueToCode</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="nx">Blockly</span><span class="p">.</span><span class="nx">Arduino</span><span class="p">.</span><span class="nx">ORDER_ATOMIC</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">[</span><span class="sb">`dht_</span><span class="si">${</span><span class="nx">no</span><span class="si">}</span><span class="sb">.readHumidity()`</span><span class="p">,</span> <span class="nx">Blockly</span><span class="p">.</span><span class="nx">Arduino</span><span class="p">.</span><span class="nx">ORDER_ATOMIC</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>在转译函数中，有两个函数方式来获取积木内部参数：</p>
+<ul>
+<li><strong>Blockly.Arduino.valueToCode</strong>：</li>
+</ul>
+<p>​   此函数用于获取积木内部的可以接收其他积木输入的参数内容（由于这类输入框中可能会放置其他积木，使用该函数会继续调用解析其内容积木内容）。函数第一个参数输入这个积木本身即this，第二个参数为此输入框的名称，第三个参数为参数优先级，直接默认使用Blockly.Arduino.ORDER_ATOMIC即可。</p>
+<ul>
+<li><strong>this.getFieldValue</strong></li>
+</ul>
+<p>​   此函数用于获取积木内部下拉框参数的内容</p>
+<p>积木代码的组成有两个部分，一是定义在开头位置的include等内容，二是在积木本身位置生成的代码内容。对于前者：</p>
+<ul>
+<li>
+<p><strong>Blockly.Arduino.includes_、Blockly.Arduino.definitions_、Blockly.Arduino.definitions_、Blockly.Arduino.setups_、Blockly.Arduino.loops_</strong></p>
+<p>为这几个变量赋值，会在代码对应的位置生成定义的内容。注意这里为数组形式，相同名称的数组内容不会重复生成。放置拖拽同一个积木时生成重复的代码内容。</p>
+</li>
+</ul>
+<p>而对于后者，积木本身位置的代码需要在return中返回。如果积木是一个输出类型，还需要在返回时返回一个代码优先级，此处直接使用Blockly.Arduino.ORDER_ATOMIC即可。</p>
+<h3 id="toolboxxml">toolbox.xml<a class="headerlink" href="#toolboxxml" title="Permanent link">&para;</a></h3>
+<p>此文件定义了积木在toolbox中的显示内容。以下为DHT样板的代码片段。</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;category</span> <span class="na">name=</span><span class="s">&quot;%{BKY_DHT_CATEGORY}&quot;</span> <span class="na">id=</span><span class="s">&quot;DHT_CATEGORY&quot;</span> <span class="na">colour=</span><span class="s">&quot;#7ED321&quot;</span> <span class="na">secondaryColour=</span><span class="s">&quot;#71BE1E&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;block</span> <span class="na">type=</span><span class="s">&quot;DHT_INIT&quot;</span> <span class="na">id=</span><span class="s">&quot;DHT_INIT&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value</span> <span class="na">name=</span><span class="s">&quot;no&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;shadow</span> <span class="na">type=</span><span class="s">&quot;math_number&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;NUM&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/field&gt;</span>
+            <span class="nt">&lt;/shadow&gt;</span>
+        <span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/block&gt;</span>
+    <span class="nt">&lt;block</span> <span class="na">type=</span><span class="s">&quot;DHT_READ_HUMIDITY&quot;</span> <span class="na">id=</span><span class="s">&quot;DHT_READ_HUMIDITY&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value</span> <span class="na">name=</span><span class="s">&quot;no&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;shadow</span> <span class="na">type=</span><span class="s">&quot;math_number&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;NUM&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/field&gt;</span>
+            <span class="nt">&lt;/shadow&gt;</span>
+        <span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/block&gt;</span>
+    <span class="nt">&lt;block</span> <span class="na">type=</span><span class="s">&quot;DHT_READ_TEMPERATURE&quot;</span> <span class="na">id=</span><span class="s">&quot;DHT_READ_TEMPERATURE&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;value</span> <span class="na">name=</span><span class="s">&quot;no&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;shadow</span> <span class="na">type=</span><span class="s">&quot;math_number&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;NUM&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/field&gt;</span>
+            <span class="nt">&lt;/shadow&gt;</span>
+        <span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;/block&gt;</span>
+<span class="nt">&lt;/category&gt;</span>
+</code></pre></div>
+<p>此处目录的名称为了多语言翻译，调用了msg中DHT_CATEGORY的值，不过在这里使用时需要在前方添加<code>BKY_</code></p>
+<p>而后下方就是之前我们定义的积木的结构，不过需要注意的是，这里我们还需要对积木内部的input_value赋初始值，即代码片段中block内部的value内容。积木下拉菜单中默认值是排第一个的选项，如果我们需要设定该默认值，直接在block结构下设定field即可，如下所示我们对dht11初始化积木的mode选项设定其值为22，这里需要使用实际值而非显示值。</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;block</span> <span class="na">type=</span><span class="s">&quot;DHT_INIT&quot;</span> <span class="na">id=</span><span class="s">&quot;DHT_INIT&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;value</span> <span class="na">name=</span><span class="s">&quot;no&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;shadow</span> <span class="na">type=</span><span class="s">&quot;math_number&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;NUM&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/field&gt;</span>
+        <span class="nt">&lt;/shadow&gt;</span>
+    <span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;mode&quot;</span><span class="nt">&gt;</span>22<span class="nt">&lt;/field&gt;</span>
+<span class="nt">&lt;/block&gt;</span>
+</code></pre></div>
+<h2 id="_4">测试插件<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>完成修改后我们重启服务器，而后在GUI界面中即可测试这个插件了。</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../how-to-add-a-new-device/" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                如何添加新的设备
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../code-generator/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                代码生成器
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2020 ScratchHW
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/ScratchHW" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.0ac82a11.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f81dfb4d.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ['navigation.tabs'],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
